@@ -1,9 +1,16 @@
 class ArticlesController < ApplicationController
 
+	## Method used to instanciete the object to create new article.
 	def new 
 		@article = Article.new
 	end
 
+	## Method used to put the values into the object to edit the article.
+	def edit
+		@article = Article.find(params[:id])
+	end
+
+	#Method used to save the article on database
 	def create
 		@article = Article.new(article_params)
 
@@ -11,6 +18,15 @@ class ArticlesController < ApplicationController
 			redirect_to @article
 		else 
 			render 'new' 
+		end
+	end
+
+	def update
+		@article = Article.find(params[:id])
+		if @article.update(article_params)
+			redirect_to @article
+		else
+			render 'edit'
 		end
 	end
 
